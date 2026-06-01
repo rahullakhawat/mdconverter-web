@@ -39,9 +39,14 @@ def convert():
         temp_output = os.path.join(UPLOAD_FOLDER, output_filename + ".md")
         with open(temp_output, "w", encoding="utf-8") as f:
             f.write(content)
-       response = send_file(temp_output, as_attachment=True, download_name=output_filename + ".md")
-       os.remove(temp_output)
-       return response
+        response = send_file(temp_output, as_attachment=True, download_name=output_filename + ".md")
+
+        @response.call_on_close
+        def cleanup_single():
+            if os.path.exists(temp_output):
+                os.remove(temp_output)
+
+        return response
 
     # Multiple files — zip them all
     zip_path = os.path.join(UPLOAD_FOLDER, "converted_files.zip")
@@ -55,8 +60,14 @@ def convert():
                 f.write(content)
             zipf.write(md_path, md_filename)
             os.remove(md_path)
+
     response = send_file(zip_path, as_attachment=True, download_name="converted_files.zip")
-    os.remove(zip_path)
+
+    @response.call_on_close
+    def cleanup_zip():
+        if os.path.exists(zip_path):
+            os.remove(zip_path)
+
     return response
 
 
@@ -66,25 +77,6 @@ def convert():
 
 @app.route("/api/convert", methods=["POST"])
 def api_convert():
-    """
-    API endpoint for developers.
-    
-    Usage:
-        POST /api/convert
-        Form data: file=<your file>
-    
-    Returns:
-        JSON with the converted Markdown text
-    
-    Example (Python):
-        import requests
-        with open("myfile.pdf", "rb") as f:
-            response = requests.post("https://your-url/api/convert", files={"file": f})
-        print(response.json()["markdown"])
-    
-    Example (curl):
-        curl -X POST https://your-url/api/convert -F "file=@myfile.pdf"
-    """
     if "file" not in request.files:
         return jsonify({"error": "No file provided. Send a file using form key 'file'."}), 400
 
