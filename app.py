@@ -39,7 +39,9 @@ def convert():
         temp_output = os.path.join(UPLOAD_FOLDER, output_filename + ".md")
         with open(temp_output, "w", encoding="utf-8") as f:
             f.write(content)
-        return send_file(temp_output, as_attachment=True, download_name=output_filename + ".md")
+       response = send_file(temp_output, as_attachment=True, download_name=output_filename + ".md")
+       os.remove(temp_output)
+       return response
 
     # Multiple files — zip them all
     zip_path = os.path.join(UPLOAD_FOLDER, "converted_files.zip")
@@ -53,7 +55,9 @@ def convert():
                 f.write(content)
             zipf.write(md_path, md_filename)
             os.remove(md_path)
-    return send_file(zip_path, as_attachment=True, download_name="converted_files.zip")
+    response = send_file(zip_path, as_attachment=True, download_name="converted_files.zip")
+    os.remove(zip_path)
+    return response
 
 
 # -----------------------------------------------
