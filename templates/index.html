@@ -19,7 +19,6 @@
             --text-muted: #aaa;
             --text-dim: #ccc;
             --error: #ff4d4d;
-            --success: #00e5a0;
         }
 
         body {
@@ -35,7 +34,6 @@
             overflow-x: hidden;
         }
 
-        /* Background grid */
         body::before {
             content: '';
             position: fixed;
@@ -48,15 +46,12 @@
             z-index: 0;
         }
 
-        /* Glow blob */
         body::after {
             content: '';
             position: fixed;
-            top: -200px;
-            left: 50%;
+            top: -200px; left: 50%;
             transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
+            width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
@@ -64,7 +59,7 @@
 
         .container {
             width: 100%;
-            max-width: 560px;
+            max-width: 600px;
             position: relative;
             z-index: 1;
             animation: fadeUp 0.6s ease both;
@@ -75,15 +70,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header */
-        .header {
-            margin-bottom: 48px;
-            text-align: center;
-        }
+        .header { margin-bottom: 48px; text-align: center; }
 
         .badge {
             display: inline-block;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 500;
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -101,20 +92,52 @@
             font-weight: 800;
             line-height: 1;
             letter-spacing: -0.03em;
-            color: var(--text);
             margin-bottom: 12px;
         }
 
-        h1 span {
-            color: var(--accent);
-        }
+        h1 span { color: var(--accent); }
 
         .subtitle {
             font-size: 15px;
             color: var(--text-muted);
             line-height: 1.6;
-            letter-spacing: 0.02em;
         }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
+        }
+
+        .tab.active {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
         /* Card */
         .card {
@@ -135,10 +158,7 @@
             opacity: 0.5;
         }
 
-        /* Form fields */
-        .field {
-            margin-bottom: 24px;
-        }
+        .field { margin-bottom: 24px; }
 
         label {
             display: block;
@@ -150,7 +170,6 @@
             margin-bottom: 8px;
         }
 
-        /* File upload zone */
         .upload-zone {
             border: 1px dashed var(--border);
             border-radius: 4px;
@@ -176,32 +195,28 @@
             height: 100%;
         }
 
-        .upload-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-            display: block;
+        .upload-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+
+        .upload-text { font-size: 15px; color: var(--text-dim); line-height: 1.5; }
+        .upload-text strong { color: var(--accent); font-weight: 500; }
+
+        .file-list {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 150px;
+            overflow-y: auto;
         }
 
-        .upload-text {
-            font-size: 15px;
-            color: var(--text-dim);
-            line-height: 1.5;
-        }
-
-        .upload-text strong {
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        .upload-filename {
-            display: none;
-            margin-top: 10px;
+        .file-item {
             font-size: 12px;
             color: var(--accent);
             background: var(--accent-dim);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 2px;
             border: 1px solid rgba(0,229,160,0.2);
+            text-align: left;
             word-break: break-all;
         }
 
@@ -209,10 +224,8 @@
             font-size: 12px;
             color: var(--text-muted);
             margin-top: 8px;
-            letter-spacing: 0.05em;
         }
 
-        /* Text input */
         input[type=text] {
             width: 100%;
             background: rgba(255,255,255,0.03);
@@ -231,18 +244,20 @@
             background: var(--accent-dim);
         }
 
-        input[type=text]::placeholder {
-            color: var(--text-muted);
-        }
+        input[type=text]::placeholder { color: var(--text-muted); }
 
-        .input-hint {
+        .input-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+        .batch-note {
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 6px;
-            letter-spacing: 0.05em;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 24px;
         }
 
-        /* Submit button */
         .btn {
             width: 100%;
             padding: 16px;
@@ -257,8 +272,6 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
         }
 
         .btn:hover {
@@ -267,27 +280,60 @@
             transform: translateY(-1px);
         }
 
-        .btn:active {
-            transform: translateY(0);
+        .btn:active { transform: translateY(0); }
+        .btn.loading { opacity: 0.7; cursor: not-allowed; pointer-events: none; }
+
+        /* API docs */
+        .api-section { margin-bottom: 28px; }
+
+        .api-section h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+            letter-spacing: 0.05em;
         }
 
-        .btn.loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-            pointer-events: none;
+        .api-section p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 12px;
         }
 
-        /* Divider */
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 28px 0;
+        pre {
+            background: #0d0d0d;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 16px;
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            overflow-x: auto;
+            line-height: 1.6;
         }
 
-        /* Supported formats */
-        .formats {
-            animation: fadeUp 0.6s 0.2s ease both;
+        .method {
+            display: inline-block;
+            background: var(--accent-dim);
+            border: 1px solid rgba(0,229,160,0.3);
+            color: var(--accent);
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 2px;
+            letter-spacing: 0.1em;
+            margin-right: 8px;
         }
+
+        .endpoint {
+            font-size: 14px;
+            color: var(--text);
+            font-family: 'DM Mono', monospace;
+        }
+
+        /* Formats */
+        .formats { animation: fadeUp 0.6s 0.2s ease both; margin-top: 24px; }
 
         .formats-title {
             font-size: 12px;
@@ -298,11 +344,7 @@
             margin-bottom: 12px;
         }
 
-        .format-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
+        .format-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 
         .tag {
             font-size: 12px;
@@ -321,31 +363,6 @@
             background: var(--accent-dim);
         }
 
-        /* Success / error messages */
-        .message {
-            padding: 14px 16px;
-            border-radius: 4px;
-            font-size: 12px;
-            line-height: 1.5;
-            margin-top: 20px;
-            display: none;
-        }
-
-        .message.success {
-            background: rgba(0,229,160,0.08);
-            border: 1px solid rgba(0,229,160,0.25);
-            color: var(--accent);
-            display: block;
-        }
-
-        .message.error {
-            background: rgba(255,77,77,0.08);
-            border: 1px solid rgba(255,77,77,0.25);
-            color: var(--error);
-            display: block;
-        }
-
-        /* Footer */
         .footer {
             margin-top: 48px;
             text-align: center;
@@ -355,26 +372,11 @@
             animation: fadeUp 0.6s 0.3s ease both;
         }
 
-        .footer a {
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+        .footer a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+        .footer a:hover { color: var(--accent); }
 
-        .footer a:hover {
-            color: var(--accent);
-        }
-
-        /* Flask success message */
-        .flask-success {
-            background: rgba(0,229,160,0.08);
-            border: 1px solid rgba(0,229,160,0.25);
-            color: var(--accent);
-            padding: 14px 16px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-top: 20px;
-        }
+        .single-name-field { display: block; }
+        .single-name-field.hidden { display: none; }
     </style>
 </head>
 <body>
@@ -387,100 +389,179 @@
         <p class="subtitle">Convert any document into clean Markdown.<br>Powered by Microsoft MarkItDown.</p>
     </div>
 
-    <div class="card">
-        <form action="/convert" method="POST" enctype="multipart/form-data" id="convertForm">
-
-            <div class="field">
-                <label>Upload File</label>
-                <div class="upload-zone" id="uploadZone">
-                    <input type="file" name="input_file" id="fileInput"
-                        accept=".pdf,.docx,.pptx,.xlsx,.xls,.jpg,.jpeg,.png,.html,.csv,.json,.xml,.zip,.mp3,.wav"
-                        required>
-                    <span class="upload-icon">⬆</span>
-                    <div class="upload-text">
-                        <strong>Click to browse</strong> or drag & drop
-                    </div>
-                    <div class="file-types">PDF · DOCX · XLSX · PPTX · HTML · CSV · JSON · XML · ZIP · JPG · MP3</div>
-                    <div class="upload-filename" id="uploadFilename"></div>
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Output File Name</label>
-                <input type="text" name="output_filename" placeholder="my-document" required>
-                <div class="input-hint">No need to add .md — it will be added automatically</div>
-            </div>
-
-            <button type="submit" class="btn" id="convertBtn">
-                Convert & Download
-            </button>
-
-        </form>
-
-        {% if success %}
-        <div class="flask-success">✓ {{ success }}</div>
-        {% endif %}
-
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('converter')">Converter</button>
+        <button class="tab" onclick="switchTab('api')">API for Developers</button>
     </div>
 
-    <div class="divider" style="margin: 24px 0;"></div>
+    <!-- Converter Tab -->
+    <div class="tab-content active" id="tab-converter">
+        <div class="card">
+            <form action="/convert" method="POST" enctype="multipart/form-data" id="convertForm">
 
-    <div class="formats">
-        <div class="formats-title">Supported Formats</div>
-        <div class="format-tags">
-            <span class="tag">.pdf</span>
-            <span class="tag">.docx</span>
-            <span class="tag">.xlsx</span>
-            <span class="tag">.xls</span>
-            <span class="tag">.pptx</span>
-            <span class="tag">.html</span>
-            <span class="tag">.csv</span>
-            <span class="tag">.json</span>
-            <span class="tag">.xml</span>
-            <span class="tag">.zip</span>
-            <span class="tag">.jpg</span>
-            <span class="tag">.png</span>
-            <span class="tag">.mp3</span>
-            <span class="tag">.wav</span>
+                <div class="field">
+                    <label>Upload Files</label>
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" name="input_files" id="fileInput"
+                            accept=".pdf,.docx,.pptx,.xlsx,.xls,.jpg,.jpeg,.png,.html,.csv,.json,.xml,.zip,.mp3,.wav"
+                            multiple required>
+                        <span class="upload-icon">⬆</span>
+                        <div class="upload-text">
+                            <strong>Click to browse</strong> or drag & drop<br>
+                            <span style="font-size:13px; color: var(--text-muted);">Select one or multiple files</span>
+                        </div>
+                        <div class="file-types">PDF · DOCX · XLSX · PPTX · HTML · CSV · JSON · XML · ZIP · JPG · MP3</div>
+                        <div class="file-list" id="fileList"></div>
+                    </div>
+                </div>
+
+                <div class="single-name-field" id="singleNameField">
+                    <div class="field">
+                        <label>Output File Name</label>
+                        <input type="text" name="output_filename" id="outputFilename" placeholder="my-document">
+                        <div class="input-hint">No need to add .md — it will be added automatically</div>
+                    </div>
+                </div>
+
+                <div class="batch-note" id="batchNote" style="display:none;">
+                    📦 Multiple files selected — all files will be converted and downloaded as a <strong>ZIP file</strong>. Each file will keep its original name with a .md extension.
+                </div>
+
+                <button type="submit" class="btn" id="convertBtn">Convert & Download</button>
+
+            </form>
+        </div>
+
+        <div class="formats">
+            <div class="formats-title">Supported Formats</div>
+            <div class="format-tags">
+                <span class="tag">.pdf</span>
+                <span class="tag">.docx</span>
+                <span class="tag">.xlsx</span>
+                <span class="tag">.xls</span>
+                <span class="tag">.pptx</span>
+                <span class="tag">.html</span>
+                <span class="tag">.csv</span>
+                <span class="tag">.json</span>
+                <span class="tag">.xml</span>
+                <span class="tag">.zip</span>
+                <span class="tag">.jpg</span>
+                <span class="tag">.png</span>
+                <span class="tag">.mp3</span>
+                <span class="tag">.wav</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Tab -->
+    <div class="tab-content" id="tab-api">
+        <div class="card">
+
+            <div class="api-section">
+                <h3>Overview</h3>
+                <p>MDConverter provides a free REST API. No API key required. Send any supported file and get Markdown back as JSON.</p>
+                <p>Base URL: <code style="color:var(--accent)">https://mdconverter-web-production.up.railway.app</code></p>
+            </div>
+
+            <div class="api-section">
+                <h3>Convert a File</h3>
+                <p><span class="method">POST</span><span class="endpoint">/api/convert</span></p>
+                <p>Send a file as multipart/form-data with the key <code style="color:var(--accent)">file</code>. Returns JSON with the Markdown content.</p>
+
+                <p style="margin-top:16px; margin-bottom:6px; font-size:11px; letter-spacing:0.1em; color:var(--text-muted);">PYTHON EXAMPLE</p>
+                <pre>import requests
+
+with open("myfile.pdf", "rb") as f:
+    response = requests.post(
+        "https://mdconverter-web-production.up.railway.app/api/convert",
+        files={"file": f}
+    )
+
+data = response.json()
+print(data["markdown"])</pre>
+
+                <p style="margin-top:16px; margin-bottom:6px; font-size:11px; letter-spacing:0.1em; color:var(--text-muted);">CURL EXAMPLE</p>
+                <pre>curl -X POST \
+  https://mdconverter-web-production.up.railway.app/api/convert \
+  -F "file=@yourfile.pdf"</pre>
+            </div>
+
+            <div class="api-section">
+                <h3>Response Format</h3>
+                <pre>{
+  "success": true,
+  "filename": "yourfile.pdf",
+  "markdown": "# Your converted content here..."
+}</pre>
+            </div>
+
+            <div class="api-section">
+                <h3>API Docs Endpoint</h3>
+                <p><span class="method">GET</span><span class="endpoint">/api/docs</span></p>
+                <p>Returns full API documentation as JSON.</p>
+            </div>
+
         </div>
     </div>
 
     <div class="footer">
-        <p>Built with <a href="https://github.com/microsoft/markitdown" target="_blank">Microsoft MarkItDown</a> &nbsp;·&nbsp; <a href="https://github.com/rahullakhawat/mdconverter-web" target="_blank">View on GitHub ★</a></p>
+        <p>Built with <a href="https://github.com/microsoft/markitdown" target="_blank">Microsoft MarkItDown</a> &nbsp;·&nbsp; <a href="https://github.com/yourusername/mdconverter-web" target="_blank">View on GitHub ★</a></p>
     </div>
 
 </div>
 
 <script>
-    // Show filename when file is selected
+    // Tab switching
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    // File selection handling
     const fileInput = document.getElementById('fileInput');
-    const uploadFilename = document.getElementById('uploadFilename');
+    const fileList = document.getElementById('fileList');
     const uploadZone = document.getElementById('uploadZone');
+    const singleNameField = document.getElementById('singleNameField');
+    const batchNote = document.getElementById('batchNote');
+    const outputFilename = document.getElementById('outputFilename');
 
     fileInput.addEventListener('change', function() {
-        if (this.files.length > 0) {
-            uploadFilename.textContent = '✓ ' + this.files[0].name;
-            uploadFilename.style.display = 'block';
-            uploadZone.style.borderColor = 'var(--accent)';
-            uploadZone.style.background = 'var(--accent-dim)';
+        fileList.innerHTML = '';
+        const files = Array.from(this.files);
+
+        files.forEach(file => {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.textContent = '✓ ' + file.name;
+            fileList.appendChild(item);
+        });
+
+        uploadZone.style.borderColor = 'var(--accent)';
+        uploadZone.style.background = 'var(--accent-dim)';
+
+        // Single vs batch mode
+        if (files.length === 1) {
+            singleNameField.classList.remove('hidden');
+            batchNote.style.display = 'none';
+            outputFilename.required = true;
+            // Pre-fill name from filename
+            outputFilename.value = files[0].name.replace(/\.[^/.]+$/, "");
+        } else {
+            singleNameField.classList.add('hidden');
+            batchNote.style.display = 'block';
+            outputFilename.required = false;
         }
     });
 
-    // Drag and drop visual feedback
-    uploadZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadZone.classList.add('dragover');
-    });
+    // Drag and drop
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', () => uploadZone.classList.remove('dragover'));
 
-    uploadZone.addEventListener('dragleave', () => {
-        uploadZone.classList.remove('dragover');
-    });
-
-    uploadZone.addEventListener('drop', () => {
-        uploadZone.classList.remove('dragover');
-    });
-
-    // Loading state on submit
+    // Loading state
     document.getElementById('convertForm').addEventListener('submit', function() {
         const btn = document.getElementById('convertBtn');
         btn.textContent = 'Converting...';
