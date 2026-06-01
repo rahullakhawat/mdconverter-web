@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MD Converter</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 60px auto; }
+        input[type=text], input[type=file] { width: 100%; padding: 8px; margin: 8px 0; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #0078d4; color: white; border: none; cursor: pointer; margin-top: 8px; }
+        .note { color: #666; font-size: 13px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <h2>MarkItDown Converter</h2>
+    <p>Upload a file and download it as a Markdown (.md) file.</p>
+
+    <form action="/convert" method="POST" enctype="multipart/form-data">
+
+        <label>Select File:</label>
+        <input type="file" name="input_file"
+            accept=".pdf,.docx,.pptx,.xlsx,.xls,.jpg,.jpeg,.png,.html,.csv,.json,.xml,.zip,.mp3,.wav"
+            required>
+        <p class="note">Supported: PDF, Word, Excel, PowerPoint, images, audio, HTML, CSV, JSON, XML, ZIP</p>
+
+        <label>Output File Name (without .md):</label>
+        <input type="text" name="output_filename" placeholder="my_output" required>
+
+        <br><br>
+        <button type="submit">Convert & Download</button>
+
+    </form>
+
+</body>
+</html>
