@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, send_file, jsonify
 from markitdown import MarkItDown
 import os
 import zipfile
+import fitz
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
@@ -9,9 +10,37 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'.pdf', '.docx', '.pptx', '.xlsx', '.xls', '.jpg', '.jpeg', '.png', '.html', '.csv', '.json', '.xml', '.zip', '.mp3', '.wav'}
 
+import fitz  # pymupdf
+
+def is_scanned_pdf(filepath):
+    """Check if a PDF is scanned (has no extractable text)"""
+    try:
+        doc = fitz.open(filepath)
+        text = ""
+        for page in doc:
+            text += page.get_text()
+        doc.close()
+        # If less than 50 characters extracted, it's likely a scanned PDF
+        return len(text.strip()) < 50
+    except:
+        return False
+
 def convert_file(file, output_filename):
     temp_input = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(temp_input)
+
+    # Check if it's a scanned PDF and run OCR if needed
+    ext = os.path.splitext(file.filename)[1].lower()
+    if ext == ".pdf" and is_scanned_pdf(temp_input):
+        ocr_output = temp_input.replace(".pdf", "_ocr.pdf")
+        try:
+            import ocrmypdf
+            ocrmypdf.ocr(temp_input, ocr_output, skip_text=True)
+            os.remove(temp_input)
+            temp_input = ocr_output
+        except Exception as e:
+            print(f"OCR failed, trying without OCR: {e}")
+
     md = MarkItDown()
     result = md.convert(temp_input)
     os.remove(temp_input)
