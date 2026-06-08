@@ -10,8 +10,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'.pdf', '.docx', '.pptx', '.xlsx', '.xls', '.jpg', '.jpeg', '.png', '.html', '.csv', '.json', '.xml', '.zip', '.mp3', '.wav'}
 
-import fitz  # pymupdf
-
 def is_scanned_pdf(filepath):
     """Check if a PDF is scanned (has no extractable text)"""
     try:
@@ -20,7 +18,6 @@ def is_scanned_pdf(filepath):
         for page in doc:
             text += page.get_text()
         doc.close()
-        # If less than 50 characters extracted, it's likely a scanned PDF
         return len(text.strip()) < 50
     except:
         return False
